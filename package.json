@@ -1,0 +1,23 @@
+{
+  "name": "kit-iconpicker",
+  "version": "1.0.0",
+  "description": "High Performance Icon Picker",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kitthemeslab/Kit-IconPicker.git"
+  },
+  "keywords": [
+    "IconPicker",
+    "UI"
+  ],
+  "author": "KitThemes <kitthemes@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kitthemeslab/Kit-IconPicker/issues"
+  },
+  "homepage": "https://github.com/kitthemeslab/Kit-IconPicker#readme"
+}
