@@ -21,6 +21,7 @@ export default ( element, options ) => {
 	const defaultOptions = {
 		icons: [],
 		position: 'auto',
+		popoverWidth: 272,
 	};
 
 	options = Object.assign( {}, defaultOptions, options );

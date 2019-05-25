@@ -50,6 +50,7 @@ class IconPicker extends Component {
 			<div className="kit-icon-picker" ref={ ( el ) => this.container = el }>
 				<button
 					onClick={ this.togglePicker }
+					ref={ ( el ) => this.iconHolder = el }
 					type="button"
 					className="kit-icon-holder">
 					{
@@ -64,8 +65,11 @@ class IconPicker extends Component {
 							'',
 							...options.icons,
 						] }
+						popoverWidth={ options.popoverWidth }
 						onChange={ this.onChange }
-						getIconByData={ this.getIconByData } />
+						getIconByData={ this.getIconByData }
+						iconHolder={ this.iconHolder }
+						popoverPos={ options.position } />
 				}
 			</div>
 		);

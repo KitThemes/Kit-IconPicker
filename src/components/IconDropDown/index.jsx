@@ -15,6 +15,34 @@ class IconDropDown extends Component {
 		search: '',
 		iconIndex: false,
 		maxPaged: 0,
+		popoverPos: {
+			top: '100%',
+			left: 0,
+		},
+	};
+	positions = [
+		'bottom left',
+		'left top',
+		'bottom right',
+		'right top',
+	];
+	positionCSS = {
+		'bottom left': {
+			top: '100%',
+			left: 0,
+		},
+		'left top': {
+			bottom: '100%',
+			left: 0,
+		},
+		'bottom right': {
+			top: '100%',
+			right: 0,
+		},
+		'right top': {
+			bottom: '100%',
+			right: 0,
+		},
 	};
 	perRow = 5;
 	updateByKey = false;
@@ -26,6 +54,8 @@ class IconDropDown extends Component {
 		if ( this.searchBox !== undefined ) {
 			this.searchBox.focus();
 		}
+
+		this.popoverPosition();
 	}
 	setScrollTop( paged ) {
 		if ( this.scrollContainer !== undefined ) {
@@ -115,11 +145,128 @@ class IconDropDown extends Component {
 		} );
 		this.forceUpdateScroll = true;
 	}
+	checkPos = {
+		'bottom left': () => {
+			if ( this.popover === undefined ) {
+				return false;
+			}
+
+			const popoverRect = this.popover.getBoundingClientRect();
+			// eslint-disable-next-line @wordpress/no-unused-vars-before-return
+			const width = window.innerWidth;
+			const height = window.innerHeight;
+			const popoverPos = {
+				top: popoverRect.top + popoverRect.height,
+				left: popoverRect.left + popoverRect.width,
+			};
+
+			if ( popoverPos.top > height ) {
+				return false;
+			} else if ( popoverPos.left > width ) {
+				return false;
+			}
+
+			return true;
+		},
+		'left top': () => {
+			if ( this.popover === undefined ) {
+				return false;
+			}
+
+			const { iconHolder } = this.props;
+			const iconHolderRect = iconHolder.getBoundingClientRect();
+			const popoverRect = this.popover.getBoundingClientRect();
+			// eslint-disable-next-line @wordpress/no-unused-vars-before-return
+			const width = window.innerWidth;
+			// const height = window.innerHeight;
+			const popoverPos = {
+				top: popoverRect.top - popoverRect.height - iconHolderRect.height,
+				left: popoverRect.left + popoverRect.width,
+			};
+
+			if ( popoverPos.top < 1 ) {
+				return false;
+			} else if ( popoverPos.left > width ) {
+				return false;
+			}
+
+			return true;
+		},
+		'bottom right': () => {
+			if ( this.popover === undefined ) {
+				return false;
+			}
+
+			const popoverRect = this.popover.getBoundingClientRect();
+			// eslint-disable-next-line @wordpress/no-unused-vars-before-return
+			// const width = window.innerWidth;
+			const height = window.innerHeight;
+			const popoverPos = {
+				top: popoverRect.top + popoverRect.height,
+				right: popoverRect.left - popoverRect.width,
+			};
+
+			if ( popoverPos.top > height ) {
+				return false;
+			} else if ( popoverPos.left < 1 ) {
+				return false;
+			}
+
+			return true;
+		},
+		'right top': () => {
+			if ( this.popover === undefined ) {
+				return false;
+			}
+
+			const popoverRect = this.popover.getBoundingClientRect();
+			// eslint-disable-next-line @wordpress/no-unused-vars-before-return
+			// const width = window.innerWidth;
+			// const height = window.innerHeight;
+			const popoverPos = {
+				top: popoverRect.top + popoverRect.height,
+				right: popoverRect.left - popoverRect.width,
+			};
+
+			if ( popoverPos.top < 1 ) {
+				return false;
+			} else if ( popoverPos.left < 1 ) {
+				return false;
+			}
+
+			return true;
+		},
+	}
+	popoverPosition() {
+		const { popoverPos } = this.props;
+
+		if ( popoverPos === 'auto' ) {
+			let alreadyValid = false;
+			this.positions.forEach( ( position ) => {
+				if ( this.checkPos[ position ] !== undefined && ! alreadyValid ) {
+					const isValid = this.checkPos[ position ]();
+
+					if ( isValid ) {
+						alreadyValid = true;
+						this.setState( {
+							popoverPos: this.positionCSS[ position ],
+						} );
+					}
+				}
+			} );
+		} else {
+		}
+	}
 	render() {
-		const { iconValue, onChange, getIconByData } = this.props;
+		const { iconValue, onChange, getIconByData, popoverWidth } = this.props;
 
 		return (
-			<div className="kit-icons-dropdown">
+			<div
+				className="kit-icons-dropdown"
+				ref={ ( el ) => this.popover = el }
+				style={ Object.assign( {}, {
+					width: popoverWidth,
+				}, this.state.popoverPos ) }>
 				<div className="kit-icon-picker-header">
 					<input
 						type="text"
