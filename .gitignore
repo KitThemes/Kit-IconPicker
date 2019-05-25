@@ -1,3 +1,4 @@
 node_modules
 package-lock.json
 build/js/kit-iconpicker.js
+build/css/kit-iconpicker.css
