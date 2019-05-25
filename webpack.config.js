@@ -14,6 +14,11 @@ module.exports = {
 	output: {
 		path: __dirname,
 		filename: 'build/js/[name].js',
+		libraryTarget: 'umd',
+		library: 'kitIconPicker',
+		libraryExport: 'default',
+		umdNamedDefine: true,
+		globalObject: `(typeof self !== 'undefined' ? self : this)`,
 	},
 	module: {
 		rules: [
