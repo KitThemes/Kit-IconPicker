@@ -31,12 +31,14 @@ class IconPicker extends Component {
 		} ) );
 	}
 	render() {
+		const { options } = this.props;
+
 		return (
 			<div className='kit-icon-picker' ref={ ( el ) => this.container = el }>
 				<button onClick={ this.togglePicker }>Icon</button>
 				{
 					this.state.open &&
-					<IconDropDown />
+					<IconDropDown icons={ options.icons } />
 				}
 			</div>
 		);

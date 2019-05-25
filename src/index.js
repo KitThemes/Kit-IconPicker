@@ -7,6 +7,10 @@ import { h, render } from 'preact';
  */
 import IconPicker from './components/IconPicker';
 
+// TODO: Add custom scrollbar.
+// TODO: Add Events options.
+// TODO: Add position system.
+
 export default ( element, options ) => {
 	if ( typeof element === 'string' ) {
 		element = document.querySelector( element );
@@ -15,5 +19,5 @@ export default ( element, options ) => {
 		return;
 	}
 
-	render( <IconPicker />, element );
+	render( <IconPicker options={ options } />, element );
 };

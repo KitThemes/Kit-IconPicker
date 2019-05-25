@@ -4,7 +4,7 @@ module.exports = {
         "es6": true
     },
     "extends": [
-		"standard-preact",
+		// "standard-preact",
         "plugin:@wordpress/eslint-plugin/recommended",
     ],
     "globals": {
