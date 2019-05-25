@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server",
+    "lint": "eslint src/**/*.js src/**/*.jsx",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

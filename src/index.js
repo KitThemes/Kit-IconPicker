@@ -14,10 +14,16 @@ import IconPicker from './components/IconPicker';
 export default ( element, options ) => {
 	if ( typeof element === 'string' ) {
 		element = document.querySelector( element );
-	} else if ( element instanceof HTMLElement ) {
-	} else {
+	} else if ( ! ( element instanceof HTMLElement ) ) {
 		return;
 	}
+
+	const defaultOptions = {
+		icons: [],
+		position: 'auto',
+	};
+
+	options = Object.assign( {}, defaultOptions, options );
 
 	render( <IconPicker options={ options } />, element );
 };

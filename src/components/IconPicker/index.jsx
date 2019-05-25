@@ -48,12 +48,22 @@ class IconPicker extends Component {
 
 		return (
 			<div className="kit-icon-picker" ref={ ( el ) => this.container = el }>
-				<button onClick={ this.togglePicker }>{ this.getIconByData( 'class', this.state.iconValue ) }</button>
+				<button
+					onClick={ this.togglePicker }
+					type="button"
+					className="kit-icon-holder">
+					{
+						this.getIconByData( 'class', this.state.iconValue )
+					}
+				</button>
 				{
 					this.state.open &&
 					<IconDropDown
 						iconValue={ this.state.iconValue }
-						icons={ options.icons }
+						icons={ [
+							'',
+							...options.icons,
+						] }
 						onChange={ this.onChange }
 						getIconByData={ this.getIconByData } />
 				}
