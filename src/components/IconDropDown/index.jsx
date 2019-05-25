@@ -27,6 +27,16 @@ class IconDropDown extends Component {
 			...icons,
 		];
 
+		const regExp = new RegExp( this.state.search );
+
+		filteredIcons = filteredIcons.filter( ( icon ) => {
+			if ( icon.match( regExp ) ) {
+				return true;
+			}
+
+			return false;
+		} );
+
 		if ( ! filterOnly ) {
 			filteredIcons = [
 				...filteredIcons.slice( start, end ),
@@ -35,16 +45,8 @@ class IconDropDown extends Component {
 
 		return filteredIcons;
 	}
-	getIconByData( type = 'class', icon ) {
-		switch ( type ) {
-			case 'class':
-				return <i className={ icon }></i>;
-		}
-	}
 	heightOfIcons() {
 		const icons = this.getIconsAfterFilter( true ).length;
-
-		console.log( icons );
 
 		let rows = Math.round( icons / this.perRow );
 		if ( icons % this.perRow ) {
@@ -54,16 +56,25 @@ class IconDropDown extends Component {
 		return rows * 50;
 	}
 	render() {
+		const { iconValue, onChange, getIconByData } = this.props;
+
 		return (
 			<div className="kit-icons-dropdown">
 				<div className="kit-icon-picker-header">
 					<input
 						type="text"
-						className="bb-icon-picker-search"
+						value={ this.state.search }
+						className="kit-icon-picker-search"
 						placeholder="Search Icon..."
 						onKeyDown={ () => {
 						} }
-						onChange={ () => {
+						onKeyUp={ ( e ) => {
+							if ( this.state.search !== e.target.value ) {
+								this.setState( {
+									search: e.target.value,
+									paged: 0,
+								} );
+							}
 						} } />
 				</div>
 				<div className="kit-icon-dropdown-icons-wrap">
@@ -84,11 +95,18 @@ class IconDropDown extends Component {
 							} }>
 								{
 									this.getIconsAfterFilter().map( ( icon ) => {
+										const isSelected = ( icon === iconValue );
 										return (
-											<li key={ icon }>
-												<div className="kit-icon-inner">
+											<li key={ icon } className={ `${ isSelected ? 'kit-icon-selected' : '' }` }>
+												<div
+													className="kit-icon-inner"
+													onClick={ ( e ) => {
+														e.preventDefault();
+
+														onChange( icon );
+													} }>
 													<div className="kit-icon-picker-icon">
-														{ this.getIconByData( 'class', icon ) }
+														{ getIconByData( 'class', icon ) }
 													</div>
 												</div>
 											</li>

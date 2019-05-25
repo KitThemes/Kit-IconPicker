@@ -11,5 +11,12 @@ module.exports = {
         "browser": true,
         "page": true,
         "wp": true,
+    },
+    "rules": {
+        "no-unused-vars": [
+            "error", {
+                "varsIgnorePattern": "^h$" 
+            }
+        ]
     }
 };
