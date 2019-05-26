@@ -1,11 +1,15 @@
 const webpack = require( 'webpack' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
+const TerserJSPlugin = require( 'terser-webpack-plugin' );
+const OptimizeCSSAssetsPlugin = require( 'optimize-css-assets-webpack-plugin' );
 const path = require( 'path' );
 const npmPackage = require( './package.json' );
 
+const min = process.env.NODE_ENV === 'production' ? '.min' : '';
+
 const cssPlugin = new MiniCssExtractPlugin( {
 	path: __dirname,
-	filename: 'build/css/[name].css',
+	filename: `build/css/[name]${ min }.css`,
 	chunkFilename: '[id].css',
 } );
 
@@ -15,12 +19,15 @@ module.exports = {
 	},
 	output: {
 		path: __dirname,
-		filename: 'build/js/[name].js',
+		filename: `build/js/[name]${ min }.js`,
 		libraryTarget: 'umd',
 		library: 'kitIconPicker',
 		libraryExport: 'default',
 		umdNamedDefine: true,
 		globalObject: `(typeof self !== 'undefined' ? self : this)`,
+	},
+	optimization: {
+		minimizer: [ new TerserJSPlugin(), new OptimizeCSSAssetsPlugin() ],
 	},
 	module: {
 		rules: [
@@ -44,7 +51,7 @@ module.exports = {
 						loader: 'sass-loader',
 						query: {
 							includePaths: [ 'src/scss' ],
-							data: '@import "color"; @import "variables"; @import "mixins";',
+							// data: '@import "color"; @import "variables"; @import "mixins";',
 						},
 					},
 				],
@@ -60,7 +67,7 @@ module.exports = {
 	resolve: {
 		extensions: [ '.js', '.jsx' ],
 	},
-	mode: 'development',
+	mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 	devServer: {
 		contentBase: path.join( __dirname, 'examples' ),
 	},

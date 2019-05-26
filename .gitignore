@@ -2,3 +2,5 @@ node_modules
 package-lock.json
 build/js/kit-iconpicker.js
 build/css/kit-iconpicker.css
+build/js/kit-iconpicker.min.js
+build/css/kit-iconpicker.min.css
