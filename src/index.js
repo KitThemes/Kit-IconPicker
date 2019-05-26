@@ -30,5 +30,5 @@ export default ( element, options ) => {
 
 	options = Object.assign( {}, defaultOptions, options );
 
-	render( <IconPicker options={ options } />, element );
+	render( <IconPicker options={ options } element={ element } />, element );
 };

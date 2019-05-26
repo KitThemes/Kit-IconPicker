@@ -14,7 +14,18 @@ class IconPicker extends Component {
 		iconValue: null,
 	}
 	componentDidMount() {
+		const { options, element } = this.props;
+
 		document.addEventListener( 'click', this.clickOutside );
+
+		if ( typeof options.events.init === 'function' ) {
+			try {
+				options.events.init( element );
+			} catch ( error ) {
+				// eslint-disable-next-line no-console
+				console.error( error );
+			}
+		}
 	}
 	componentWillUnmount() {
 		document.removeEventListener( 'click', this.clickOutside );
@@ -32,6 +43,17 @@ class IconPicker extends Component {
 		} ) );
 	}
 	onChange = ( icon ) => {
+		const { options } = this.props;
+
+		if ( typeof options.events.change === 'function' ) {
+			try {
+				options.events.change( icon );
+			} catch ( error ) {
+				// eslint-disable-next-line no-console
+				console.error( error );
+			}
+		}
+
 		this.setState( {
 			iconValue: icon,
 			open: false,
