@@ -22,6 +22,10 @@ export default ( element, options ) => {
 		icons: [],
 		position: 'auto',
 		popoverWidth: 272,
+		events: {
+			change: null,
+			init: null,
+		},
 	};
 
 	options = Object.assign( {}, defaultOptions, options );

@@ -9,7 +9,7 @@ import IconDropDown from '../IconDropDown';
 import './style.scss';
 
 class IconPicker extends Component {
-	state ={
+	state = {
 		open: false,
 		iconValue: null,
 	}

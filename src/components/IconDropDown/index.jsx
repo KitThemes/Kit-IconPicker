@@ -254,7 +254,35 @@ class IconDropDown extends Component {
 					}
 				}
 			} );
-		} else {
+		} else if ( typeof popoverPos === 'string' ) {
+			const processedPopoverPos = popoverPos.split( '' ).sort().join( ' ' );
+
+			if ( this.checkPos[ processedPopoverPos ] !== undefined ) {
+				this.setState( {
+					popoverPos: this.positionCSS[ processedPopoverPos ],
+				} );
+			}
+		} else if ( Array.isArray( popoverPos ) && popoverPos.length ) {
+			const processedPopoverPos = popoverPos.map( ( position ) => position.split( ' ' ).sort().join( ' ' ) );
+			let alreadyValid = false;
+			processedPopoverPos.forEach( ( position ) => {
+				if ( this.checkPos[ position ] !== undefined && ! alreadyValid ) {
+					const isValid = this.checkPos[ position ]();
+
+					if ( isValid ) {
+						alreadyValid = true;
+						this.setState( {
+							popoverPos: this.positionCSS[ position ],
+						} );
+					}
+				}
+			} );
+
+			if ( alreadyValid === false ) {
+				this.setState( {
+					popoverPos: this.positionCSS[ processedPopoverPos[ 0 ] ],
+				} );
+			}
 		}
 	}
 	render() {

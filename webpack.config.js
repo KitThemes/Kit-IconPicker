@@ -1,5 +1,7 @@
+const webpack = require( 'webpack' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const path = require( 'path' );
+const npmPackage = require( './package.json' );
 
 const cssPlugin = new MiniCssExtractPlugin( {
 	path: __dirname,
@@ -51,6 +53,9 @@ module.exports = {
 	},
 	plugins: [
 		cssPlugin,
+		new webpack.BannerPlugin( {
+			banner: `Kit IconPicker v${ npmPackage.version }\nCopyright 2019 KitThemes (https://www.kitthemes.com/)\nLicensed under MIT (https://github.com/kitthemeslab/Kit-IconPicker/blob/master/LICENSE)`,
+		} ),
 	],
 	resolve: {
 		extensions: [ '.js', '.jsx' ],
