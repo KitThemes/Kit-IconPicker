@@ -1,11 +1,7 @@
 /**
- * External dependencies
- */
-import { h, render } from 'preact';
-/**
  * Internal dependencies
  */
-import IconPicker from './components/IconPicker';
+import KitIconPicker from './components/KitIconPicker';
 
 // TODO: Add custom scrollbar.
 // TODO: Add Events options.
@@ -18,17 +14,9 @@ export default ( element, options ) => {
 		return;
 	}
 
-	const defaultOptions = {
-		icons: [],
-		position: 'auto',
-		popoverWidth: 272,
-		events: {
-			change: null,
-			init: null,
-		},
-	};
+	const iconPicker = new KitIconPicker( element, options );
 
-	options = Object.assign( {}, defaultOptions, options );
+	element.kitIconPicker = iconPicker;
 
-	render( <IconPicker options={ options } element={ element } />, element );
+	return iconPicker;
 };

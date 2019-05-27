@@ -26,9 +26,26 @@ class IconPicker extends Component {
 				console.error( error );
 			}
 		}
+		this.props.setValue( this.setValueFromParent );
 	}
 	componentWillUnmount() {
 		document.removeEventListener( 'click', this.clickOutside );
+	}
+	setValueFromParent = ( iconValue, force = false ) => {
+		const { options } = this.props;
+
+		if ( force && typeof options.events.change === 'function' ) {
+			try {
+				options.events.change( iconValue );
+			} catch ( error ) {
+				// eslint-disable-next-line no-console
+				console.error( error );
+			}
+		}
+
+		this.setState( {
+			iconValue,
+		} );
 	}
 	clickOutside = ( e ) => {
 		if ( ! this.container || ! this.container.contains( e.target ) ) {
