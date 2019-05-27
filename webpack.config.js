@@ -40,6 +40,9 @@ module.exports = {
 			},
 			{
 				test: /\.scss$/,
+				resolve: {
+					extensions: [ '.scss' ],
+				},
 				use: [
 					{
 						loader: MiniCssExtractPlugin.loader,
@@ -51,7 +54,7 @@ module.exports = {
 						loader: 'sass-loader',
 						query: {
 							includePaths: [ 'src/scss' ],
-							// data: '@import "color"; @import "variables"; @import "mixins";',
+							data: '@import "color"; @import "variables"; @import "mixins";',
 						},
 					},
 				],
